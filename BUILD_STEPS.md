@@ -173,3 +173,20 @@ The site now presents four individual personal profiles, not a group. Layout, ro
 | 7 | `screenshots/` | All screenshots retaken. |
 
 Verification: `/`, `/about`, `/contact` return HTTP 200 (titles `Home | DevProfiles` etc.); tabs, hash links, accordion, validation, toast and 375px/1280px overflow checks pass; no JS errors. The rendered HTML of all three pages has no match for team, we, our, group, placeholder text, student, matric, 01B, Kodera or any matric ID. Remaining source matches are only code comments, the config file name, the `config('team')` call and Bootstrap's `list-group` class, none of which is displayed.
+
+## Realistic profile content (config/team.php) and pill fix
+
+Only `config/team.php` content changed (same fields and structure); views, routes and design are untouched, apart from the small CSS fix below.
+
+| Person | Programme | Title | Skills | Certifications | Email |
+|--------|-----------|-------|--------|----------------|-------|
+| Ainin (`ainin`) | Software Engineering | Full Stack Developer | Laravel, PHP, MySQL, JavaScript, Git, UI/UX Design | Oracle Cloud Foundations, PHP and Laravel Web Development, Git and GitHub Essentials | ainin@gmail.com |
+| Faten (`faten`) | Software Engineering | Mobile App Developer | Flutter, UI/UX Design, JavaScript, Git, MySQL | Flutter Development Bootcamp, Google UX Design Foundations, Responsive Web Design | faten@gmail.com |
+| Huda (`huda`) | Computer Systems and Networking | Network Engineer | Cisco Routing and Switching, Wireshark, Network Security, Linux Administration, Python Scripting | Cisco Introduction to Networks, Cisco Switching, Routing and Wireless Essentials | huda@gmail.com |
+| Aisyah (`aisyah`) | Computer Systems and Networking | Network and Security Specialist | Network Security, Linux Administration, Cloud Networking (AWS), Wireshark, Python Scripting, Cisco Routing and Switching | AWS Cloud Practitioner, Cisco Cybersecurity Essentials, Linux Essentials | aisyah@gmail.com |
+
+- First-person bios (2 to 3 sentences) match each field; hobbies (3 to 4) differ per person; the first accordion item is "Education": Bachelor of Computer Science (their programme), Universiti Malaysia Pahang Al-Sultan Abdullah, expected 2027, followed by "Highlights" and "What I like working on".
+- Phone numbers (`+60 1X-XXX XXXX` style, all different) and project counts are sample values; social links remain `#`. Ainin's phone was edited by the user and kept as is.
+- Home stats are computed from the config: 4 profiles, 15 projects showcased, 11 certifications listed, 24 skills covered (after Laravel was added for everyone; Aisyah's Cisco Routing and Switching skill was replaced by Laravel to stay at 6 skills).
+- CSS fix (`public/css/style.css`, profile pills): columns are now `minmax(0, 1fr)` and the role text wraps, because the longer role "Network and Security Specialist" stretched the grid and caused 72px of horizontal overflow at 375px on About.
+- Verification: all 3 pages return 200; each About tab opens from `/about#slug` and from the Home "View Profile" buttons; no overflow at 375px or 1280px on any tab; no JS errors; screenshots retaken.

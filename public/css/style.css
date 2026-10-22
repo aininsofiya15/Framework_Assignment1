@@ -304,10 +304,10 @@ html { scroll-behavior: smooth; }
 .form-select:focus { border-color: var(--c-primary); box-shadow: 0 0 0 .2rem rgba(109, 40, 217, .18); }
 
 /* ===== Profile pills: equal-width, avatar + name + role ===== */
-.member-pills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-.member-pills .nav-item { display: flex; }
+.member-pills { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+.member-pills .nav-item { display: flex; min-width: 0; }
 .member-pills .nav-link {
-    width: 100%; display: flex; align-items: center; gap: .75rem; text-align: left;
+    width: 100%; min-width: 0; display: flex; align-items: center; gap: .75rem; text-align: left;
     border-radius: 1rem; padding: .8rem 1rem; box-shadow: var(--shadow-soft);
     transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
 }
@@ -319,10 +319,10 @@ html { scroll-behavior: smooth; }
 }
 .member-pills .pill-text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
 .member-pills .pill-text strong { font-weight: 600; font-size: 1rem; }
-.member-pills .pill-text small { font-size: .75rem; opacity: .7; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-@media (max-width: 991.98px) { .member-pills { grid-template-columns: repeat(2, 1fr); gap: .75rem; } }
+.member-pills .pill-text small { font-size: .75rem; opacity: .7; }
+@media (max-width: 991.98px) { .member-pills { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; } }
 @media (max-width: 575.98px) {
     .member-pills .nav-link { padding: .6rem .7rem; gap: .5rem; }
     .member-pills .pill-initials { width: 2.2rem; height: 2.2rem; font-size: .75rem; }
-    .member-pills .pill-text small { font-size: .68rem; }
+    .member-pills .pill-text small { font-size: .68rem; white-space: normal; }
 }
