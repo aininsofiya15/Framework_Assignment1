@@ -61,7 +61,7 @@ html { scroll-behavior: smooth; }
 .brand-mark {
     display: inline-grid; place-items: center; width: 2.2rem; height: 2.2rem;
     border-radius: 50%; background: var(--c-accent); color: #3b2a00;
-    font-size: .85rem; margin-right: .35rem;
+    font-size: .7rem; margin-right: .35rem;
 }
 .navbar-profile .nav-link {
     color: rgba(255, 255, 255, .8); border-radius: 50rem; padding: .45rem 1rem;
@@ -273,3 +273,56 @@ html { scroll-behavior: smooth; }
 /* Contact side card: pin the social icons to the bottom so the card has no dead space */
 .contact-side { display: flex; flex-direction: column; }
 .contact-social { margin-top: auto; }
+
+/* ===== Team: member cards, nav pills ===== */
+.brand-mark { width: 2.4rem; }
+.avatar-md { width: 5.5rem; height: 5.5rem; font-size: 1.7rem; box-shadow: 0 0 0 4px rgba(109, 40, 217, .12), var(--shadow-soft); }
+.member-card .btn { margin-top: auto; }
+
+.nav-pills {
+    --bs-nav-pills-link-active-bg: var(--c-primary);
+    --bs-nav-link-color: var(--c-primary);
+    --bs-nav-link-hover-color: var(--c-primary-dark);
+}
+.nav-pills .nav-link { border-radius: 50rem; background: var(--c-surface); box-shadow: var(--shadow-soft); font-weight: 500; }
+.nav-pills .nav-link.active { color: #fff; background: var(--c-primary); }
+.nav-pills .pill-initials {
+    display: inline-grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: 50%;
+    background: var(--c-accent); color: #3b2a00; font-size: .7rem; font-weight: 700; margin-right: .4rem;
+}
+@media (max-width: 575.98px) {
+    /* 2 x 2 grid of pills on phones so none are cut off */
+    .member-pills { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .member-pills .nav-link { width: 100%; padding-left: .5rem; padding-right: .5rem; }
+}
+
+/* Compact contact list for all members */
+.member-contact + .member-contact { border-top: 1px solid rgba(255, 255, 255, .25); padding-top: 1rem; margin-top: 1rem; }
+.member-contact .social-link { width: 2.2rem; height: 2.2rem; font-size: 1rem; }
+.member-contact .contact-line { overflow-wrap: anywhere; }
+.form-select { border-radius: .75rem; padding: .75rem 1rem; border: 1px solid #ddd6ee; }
+.form-select:focus { border-color: var(--c-primary); box-shadow: 0 0 0 .2rem rgba(109, 40, 217, .18); }
+
+/* ===== Profile pills: equal-width, avatar + name + role ===== */
+.member-pills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.member-pills .nav-item { display: flex; }
+.member-pills .nav-link {
+    width: 100%; display: flex; align-items: center; gap: .75rem; text-align: left;
+    border-radius: 1rem; padding: .8rem 1rem; box-shadow: var(--shadow-soft);
+    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+}
+.member-pills .nav-link:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+.member-pills .nav-link.active { background: var(--gradient-hero); box-shadow: var(--shadow-lift); }
+.member-pills .pill-initials {
+    flex-shrink: 0; width: 2.6rem; height: 2.6rem; margin: 0; font-size: .85rem;
+    background: linear-gradient(135deg, var(--c-accent), #fb7185); color: #fff;
+}
+.member-pills .pill-text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+.member-pills .pill-text strong { font-weight: 600; font-size: 1rem; }
+.member-pills .pill-text small { font-size: .75rem; opacity: .7; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 991.98px) { .member-pills { grid-template-columns: repeat(2, 1fr); gap: .75rem; } }
+@media (max-width: 575.98px) {
+    .member-pills .nav-link { padding: .6rem .7rem; gap: .5rem; }
+    .member-pills .pill-initials { width: 2.2rem; height: 2.2rem; font-size: .75rem; }
+    .member-pills .pill-text small { font-size: .68rem; }
+}

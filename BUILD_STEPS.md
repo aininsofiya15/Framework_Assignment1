@@ -122,3 +122,54 @@ Commands run (PowerShell, from `Framework_Assignment1`):
 Result: the empty `personal-profile` folder could not be deleted because another process (not PHP or Node; most likely the editor or a terminal opened in that folder) still had a handle on it. Close it and delete the empty folder by hand (`rmdir personal-profile`). It contains no files.
 
 To end up with the same structure from scratch, either run `composer create-project laravel/laravel personal-profile` and move its contents up as above, or run `composer create-project laravel/laravel .` inside an empty `Framework_Assignment1` (not what was done here).
+
+## Team version: 4 group members instead of one profile (Team 01B)
+
+The sample profile "Alex Tan" was replaced by the four group members. Routes (`home`, `about`, `contact`), the master layout, design, colour scheme and Bootstrap components are unchanged; only content, the files below and a few CSS rules changed. No database, no new packages. Commands run: `php artisan optimize:clear`, `php artisan route:list --except-vendor` (still exactly `home`, `about`, `contact`), `php artisan serve --port=8010` (temporary).
+
+| # | File | Action | Purpose |
+|---|------|--------|---------|
+| 1 | `config/team.php` | Created | The ONE place for all member data: an array of 4 members (slugs `ainin`, `huda`, `aisyah`, `faten`) with name, matric ID, initials, title, bio, programme, skills + percentages, certifications, hobbies, education facts, email, phone, social links (`#`). Each member edits only their own block. |
+| 2 | `.env` | Edited | `APP_NAME="Team 01B"`. |
+| 3 | `resources/views/layouts/master.blade.php` | Edited | Title suffix `... \| Team 01B`, navbar brand ("01B" mark + Team 01B), footer text. |
+| 4 | `resources/views/home.blade.php` | Edited | Hero is now a team intro (Team 01B + short description). Stat cards show team stats computed from `config('team')` (4 members, combined projects, combined certifications, total skills). New "Meet the Team" section: `@foreach` over `config('team')` giving avatar, name, matric ID, title, 3 skill badges and a "View profile" button to `route('about') . '#slug'`. Wording of the other sections changed from "I" to "we"; call-to-action banner kept. |
+| 5 | `resources/views/about.blade.php` | Edited | Breadcrumb kept. Added Bootstrap nav pills (one per member) with a tab pane per member containing the same background card, skills (progress bars + badges), certifications list group, hobby cards and education accordion, all looped from the config. Accordion/collapse IDs are unique per member (`accordion-{slug}`, `collapse-{slug}-{n}`). A small `@push('scripts')` script opens the tab named in the URL hash (`/about#huda`) and keeps the hash in sync when a tab is clicked. |
+| 6 | `resources/views/contact.blade.php` | Edited | Form and validation kept. Added a required "Send to" select with the 4 names. The single details card is now one card listing all 4 members (email, phone, 4 social icons each with a tooltip). The success toast now reads "Thank you! Your message to {selected name} has been sent." |
+| 7 | `public/css/style.css` | Edited (appended) | Styles for the member avatar size, nav pills (palette colours; 2 x 2 grid on phones), compact contact list and `.form-select`; brand mark made wider/smaller text for "01B". |
+| 8 | `screenshots/` | Retaken | All screenshots retaken (Playwright + headless Edge, scratch folder outside the project). Extra files added: `about-*-huda.png` (second tab) and `contact-*-mobile.png`. |
+
+Verification (all passed): `/`, `/about`, `/contact` return HTTP 200; all 4 Home "View profile" buttons open the matching tab; `/about#ainin|huda|aisyah|faten` each open the right tab; no duplicate element IDs on About; accordion works per member; empty Contact form flags all 5 fields (including "Send to"); a valid submit shows the toast with the chosen name; no horizontal overflow at 375px or 1280px on any page or tab; no JS errors. `grep -r "Alex" resources/views` returns 0 matches.
+
+Placeholders to edit: everything in `config/team.php` except names, matric IDs and slugs; the placeholder projects in the Home "Featured Projects" section; and "Team 01B" description text in `home.blade.php`.
+
+## Professional rebrand: "Kodera Studio" (wording and branding only)
+
+Layout, routes, components and design are unchanged. Commands run: `php artisan optimize:clear`, `php artisan route:list --except-vendor` (still `home`, `about`, `contact`), temporary `php artisan serve`.
+
+| # | File | Change |
+|---|------|--------|
+| 1 | `.env` | `APP_NAME="Kodera Studio"`. |
+| 2 | `resources/views/layouts/master.blade.php` | Page titles `... \| Kodera Studio`, navbar brand "KS" badge + Kodera Studio, footer "© Kodera Studio", nav/footer link "About Us". |
+| 3 | `resources/views/home.blade.php` | Badge "Available for Projects"; hero "Kodera Studio" with "KS" avatar; tagline "A small team building clean, modern web and mobile applications"; new 2-line studio intro; stats renamed Team Members / Projects Delivered / Certifications / Core Skills (numbers still computed from `config('team')`); matric IDs removed from member cards; CTA "Start a project"; student/campus wording removed. |
+| 4 | `resources/views/about.blade.php` | "About Us" title/breadcrumb/heading; matric ID and programme/university lines replaced by role, focus and location; "Experience & Quick Facts". |
+| 5 | `resources/views/contact.blade.php` | "Get in Touch" header, "Start a project" form heading, "Send to" select ("Choose who to contact..."), "Send Enquiry" button, side card "Get in touch with our team" showing role instead of matric ID; toast "Thank you! Your message has been sent to [name]." |
+| 6 | `config/team.php` | Professional roles (Full Stack Developer, UI/UX Designer, Backend Developer, Mobile Developer), first-person bios, `focus`/`location` replace `programme`/`university`, experience-style facts. Header comment states all values except names and slugs are placeholders each member must replace. `matric` kept for records only and never displayed. |
+| 7 | `screenshots/` | All screenshots retaken. |
+
+Verification: `/`, `/about`, `/contact` return HTTP 200 with titles `Home | Kodera Studio` etc.; all tab/hash/accordion/validation/toast checks and the 375px and 1280px overflow checks from the previous step pass again; no JS errors. A search of `resources/views` and the rendered pages for "Team 01B", "01B", "Group Project", "Placeholder", "student", "matric", "Sample University" finds nothing displayed. (The only matches are HTML `placeholder=` attributes on form fields and code comments.) Members must still replace all sample content in `config/team.php`.
+
+## Individual profiles rebrand: "DevProfiles" (wording and branding only)
+
+The site now presents four individual personal profiles, not a group. Layout, routes, components and design are unchanged. Commands run: `php artisan optimize:clear`, `php artisan route:list --except-vendor` (still `home`, `about`, `contact`), temporary `php artisan serve`.
+
+| # | File | Change |
+|---|------|--------|
+| 1 | `.env` | `APP_NAME="DevProfiles"`. |
+| 2 | `resources/views/layouts/master.blade.php` | Titles `... \| DevProfiles`, navbar brand with "DP" badge, footer, "About Me" link restored. |
+| 3 | `resources/views/home.blade.php` | Badge "Profile Showcase"; heading "Discover Developer Profiles"; subheading "Explore the backgrounds, skills and work of four developers"; neutral intro; buttons "Browse Profiles" (scrolls to `#profiles`) and "Get in Touch"; "DP" hero circle; stats Profiles / Projects Showcased / Certifications Listed / Skills Covered (still computed from the config); section "Featured Profiles" with "View Profile" buttons to `/about#slug`; all "we/our/team" wording removed. Internal variable renamed `$team` -> `$profiles`. |
+| 4 | `resources/views/about.blade.php` | "About Me" restored; nav pills kept, one per person; variable renamed. |
+| 5 | `resources/views/contact.blade.php` | Header "Get in Touch"; select labelled "Who would you like to contact?"; each person's details listed separately under "Contact Details"; first-person form text; toast "Thank you! Your message has been sent to [name]." |
+| 6 | `config/team.php` | Header comment now says SAMPLE CONTENT to be replaced by each person; `matric` key renamed `ref` (never displayed); bios and facts rewritten in first person ("I am a ...") with no mention of the others; skill "Teamwork" -> "Collaboration". File name and `config('team')` kept so the views still load it. |
+| 7 | `screenshots/` | All screenshots retaken. |
+
+Verification: `/`, `/about`, `/contact` return HTTP 200 (titles `Home | DevProfiles` etc.); tabs, hash links, accordion, validation, toast and 375px/1280px overflow checks pass; no JS errors. The rendered HTML of all three pages has no match for team, we, our, group, placeholder text, student, matric, 01B, Kodera or any matric ID. Remaining source matches are only code comments, the config file name, the `config('team')` call and Bootstrap's `list-group` class, none of which is displayed.

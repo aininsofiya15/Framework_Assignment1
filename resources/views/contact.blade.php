@@ -4,6 +4,8 @@
 
 @section('content')
 
+    @php $profiles = config('team'); @endphp
+
     {{-- ===== Page header with breadcrumb ===== --}}
     <header class="page-header">
         <div class="container">
@@ -13,7 +15,7 @@
                     <li class="breadcrumb-item active" aria-current="page">Contact</li>
                 </ol>
             </nav>
-            <h1 class="h2 mb-0"><i class="bi bi-envelope-paper-heart me-2"></i>Contact Me</h1>
+            <h1 class="h2 mb-0"><i class="bi bi-envelope-paper-heart me-2"></i>Get in Touch</h1>
         </div>
     </header>
 
@@ -23,9 +25,19 @@
             {{-- ===== Contact form (client-side validation, no backend) ===== --}}
             <section class="col-lg-8 reveal">
                 <div class="card p-4 p-md-5">
-                    <h2 class="h4 mb-4">Send me a message</h2>
+                    <h2 class="h4 mb-4">Send a message</h2>
                     <form id="contactForm" novalidate>
                         <div class="row g-3">
+                            <div class="col-12">
+                                <label for="sendTo" class="form-label">Who would you like to contact?</label>
+                                <select class="form-select" id="sendTo" required>
+                                    <option value="" selected disabled>Choose a person...</option>
+                                    @foreach ($profiles as $member)
+                                        <option value="{{ $member['slug'] }}">{{ $member['name'] }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback">Please choose who you would like to contact.</div>
+                            </div>
                             <div class="col-md-6">
                                 <label for="name" class="form-label">Name</label>
                                 <input type="text" class="form-control" id="name" required minlength="2" placeholder="Your full name">
@@ -43,7 +55,7 @@
                             </div>
                             <div class="col-12">
                                 <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" id="message" rows="5" required minlength="10" placeholder="Write your message here..."></textarea>
+                                <textarea class="form-control" id="message" rows="5" required minlength="10" placeholder="Tell me what you have in mind..."></textarea>
                                 <div class="invalid-feedback">Please write a message (at least 10 characters).</div>
                             </div>
                             <div class="col-12 d-flex flex-column flex-sm-row gap-2">
@@ -55,36 +67,24 @@
                 </div>
             </section>
 
-            {{-- ===== Side card: contact details and social icons (placeholders) ===== --}}
+            {{-- ===== Side card: all members' contact details and social icons (sample data) ===== --}}
             <aside class="col-lg-4 reveal">
                 <div class="card contact-side card-hover p-4 h-100">
                     <h2 class="h4 mb-4">Contact Details</h2>
-                    <div class="contact-item">
-                        <span class="icon-circle"><i class="bi bi-envelope"></i></span>
-                        <div><div class="small opacity-75">Email</div><a href="mailto:alex.tan@example.com">alex.tan@example.com</a></div>
-                    </div>
-                    <div class="contact-item">
-                        <span class="icon-circle"><i class="bi bi-telephone"></i></span>
-                        <div><div class="small opacity-75">Phone</div><a href="tel:+60123456789">+60 12-345 6789</a></div>
-                    </div>
-                    <div class="contact-item">
-                        <span class="icon-circle"><i class="bi bi-geo-alt"></i></span>
-                        <div><div class="small opacity-75">Location</div>Kuala Lumpur, Malaysia</div>
-                    </div>
-                    <div class="contact-item">
-                        <span class="icon-circle"><i class="bi bi-mortarboard"></i></span>
-                        <div><div class="small opacity-75">University</div>Sample University</div>
-                    </div>
-                    <div class="contact-social">
-                        <hr class="border-light opacity-50">
-                        <div class="small opacity-75 mb-2">Find me online</div>
-                        <div class="d-flex gap-2">
-                            <a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-title="LinkedIn" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
-                            <a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-title="GitHub" aria-label="GitHub"><i class="bi bi-github"></i></a>
-                            <a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-title="Instagram" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                            <a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-title="Email" aria-label="Email"><i class="bi bi-envelope-at"></i></a>
+                    @foreach ($profiles as $member)
+                        <div class="member-contact">
+                            <div class="fw-semibold">{{ $member['name'] }}</div>
+                            <div class="small opacity-75 mb-2">{{ $member['title'] }}</div>
+                            <div class="contact-line small mb-1"><i class="bi bi-envelope me-2"></i><a href="mailto:{{ $member['email'] }}">{{ $member['email'] }}</a></div>
+                            <div class="contact-line small mb-2"><i class="bi bi-telephone me-2"></i><a href="tel:{{ preg_replace('/[^+\d]/', '', $member['phone']) }}">{{ $member['phone'] }}</a></div>
+                            <div class="d-flex gap-2">
+                                <a href="{{ $member['social']['linkedin'] }}" class="social-link" data-bs-toggle="tooltip" data-bs-title="LinkedIn ({{ $member['nickname'] }})" aria-label="LinkedIn {{ $member['nickname'] }}"><i class="bi bi-linkedin"></i></a>
+                                <a href="{{ $member['social']['github'] }}" class="social-link" data-bs-toggle="tooltip" data-bs-title="GitHub ({{ $member['nickname'] }})" aria-label="GitHub {{ $member['nickname'] }}"><i class="bi bi-github"></i></a>
+                                <a href="{{ $member['social']['instagram'] }}" class="social-link" data-bs-toggle="tooltip" data-bs-title="Instagram ({{ $member['nickname'] }})" aria-label="Instagram {{ $member['nickname'] }}"><i class="bi bi-instagram"></i></a>
+                                <a href="mailto:{{ $member['email'] }}" class="social-link" data-bs-toggle="tooltip" data-bs-title="Email ({{ $member['nickname'] }})" aria-label="Email {{ $member['nickname'] }}"><i class="bi bi-envelope-at"></i></a>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
             </aside>
 
@@ -95,7 +95,7 @@
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
-                <div class="toast-body"><i class="bi bi-check-circle-fill me-2"></i>Thank you! Your message has been sent.</div>
+                <div class="toast-body"><i class="bi bi-check-circle-fill me-2"></i><span id="toastText">Thank you! Your message has been sent.</span></div>
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
         </div>
@@ -119,6 +119,9 @@
             form.classList.add('was-validated');
             return;
         }
+        var sendTo = document.getElementById('sendTo');
+        var recipient = sendTo.options[sendTo.selectedIndex].text;
+        document.getElementById('toastText').textContent = 'Thank you! Your message has been sent to ' + recipient + '.';
         toast.show();
         form.reset();
         form.classList.remove('was-validated');

@@ -4,6 +4,8 @@
 
 @section('content')
 
+    @php $profiles = config('team'); @endphp
+
     {{-- ===== Page header with breadcrumb ===== --}}
     <header class="page-header">
         <div class="container">
@@ -19,189 +21,151 @@
 
     <div class="container mt-5">
 
-        {{-- ===== Background card with photo ===== --}}
-        <section class="mb-5 reveal">
-            <div class="card card-hover p-4">
-                <div class="row align-items-center g-4">
-                    <div class="col-md-4 d-flex justify-content-center">
-                        {{-- Initials avatar placeholder: replace with <img src="{{ asset('images/profile.jpg') }}" alt="Alex Tan"> --}}
-                        <div class="avatar avatar-lg">AT</div>
-                    </div>
-                    <div class="col-md-8">
-                        <h2 class="h4">Alex Tan</h2>
-                        <p class="text-muted mb-2">
-                            <i class="bi bi-mortarboard me-1"></i>Bachelor of Computer Science
-                        </p>
-                        <p class="text-muted mb-3">
-                            <i class="bi bi-building me-1"></i>Sample University
-                        </p>
-                        <p>
-                            I am a passionate student who enjoys building clean, user friendly web and mobile
-                            applications. With two years of coding experience, I like turning ideas into working
-                            projects and learning new tools along the way.
-                        </p>
-                        <span class="badge text-bg-primary">Computer Science</span>
-                        <span class="badge text-bg-warning">2 Years Coding</span>
-                        <span class="badge text-bg-success">CGPA 3.50</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+        {{-- ===== Nav pills: one tab per member (opened by URL hash, e.g. /about#huda) ===== --}}
+        <ul class="nav nav-pills member-pills mb-4 reveal" id="memberTabs" role="tablist">
+            @foreach ($profiles as $member)
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link {{ $loop->first ? 'active' : '' }}" id="tab-{{ $member['slug'] }}"
+                            data-bs-toggle="pill" data-bs-target="#pane-{{ $member['slug'] }}" data-member="{{ $member['slug'] }}"
+                            type="button" role="tab" aria-controls="pane-{{ $member['slug'] }}"
+                            aria-selected="{{ $loop->first ? 'true' : 'false' }}">
+                        <span class="pill-initials">{{ $member['initials'] }}</span><span class="pill-text"><strong>{{ $member['nickname'] }}</strong><small>{{ $member['title'] }}</small></span>
+                    </button>
+                </li>
+            @endforeach
+        </ul>
 
-        {{-- ===== Skills (progress bars) and Certifications (list group) ===== --}}
-        <section class="mb-5 reveal">
-            <div class="row g-4">
-                <div class="col-lg-6 d-flex flex-column">
-                    <h2 class="section-title h4 align-self-start">Skills</h2>
-                    <div class="card p-4 flex-grow-1">
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between"><span>HTML &amp; CSS</span><span class="text-muted">90%</span></div>
-                            <div class="progress" role="progressbar" aria-label="HTML and CSS" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: 90%"></div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between"><span>JavaScript</span><span class="text-muted">75%</span></div>
-                            <div class="progress" role="progressbar" aria-label="JavaScript" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: 75%"></div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between"><span>PHP &amp; Laravel</span><span class="text-muted">80%</span></div>
-                            <div class="progress" role="progressbar" aria-label="PHP and Laravel" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: 80%"></div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between"><span>MySQL</span><span class="text-muted">70%</span></div>
-                            <div class="progress" role="progressbar" aria-label="MySQL" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: 70%"></div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between"><span>UI Design</span><span class="text-muted">65%</span></div>
-                            <div class="progress" role="progressbar" aria-label="UI Design" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: 65%"></div>
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <div class="d-flex justify-content-between"><span>Teamwork</span><span class="text-muted">85%</span></div>
-                            <div class="progress" role="progressbar" aria-label="Teamwork" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: 85%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <span class="badge badge-skill">HTML &amp; CSS</span>
-                            <span class="badge badge-skill">JavaScript</span>
-                            <span class="badge badge-skill">PHP &amp; Laravel</span>
-                            <span class="badge badge-skill">MySQL</span>
-                            <span class="badge badge-skill">UI Design</span>
-                            <span class="badge badge-skill">Teamwork</span>
-                        </div>
-                    </div>
-                </div>
+        <div class="tab-content">
+            @foreach ($profiles as $member)
+                <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="pane-{{ $member['slug'] }}"
+                     role="tabpanel" aria-labelledby="tab-{{ $member['slug'] }}" tabindex="0">
 
-                <div class="col-lg-6 d-flex flex-column">
-                    <h2 class="section-title h4 align-self-start">Certifications</h2>
-                    <div class="card flex-grow-1">
-                        <ul class="list-group list-group-flush rounded-4 h-100">
-                            <li class="list-group-item d-flex align-items-center gap-3 flex-fill">
-                                <i class="bi bi-globe2"></i>
-                                <div><strong>Introduction to Web Development</strong><div class="small text-muted">Certificate of completion</div></div>
-                            </li>
-                            <li class="list-group-item d-flex align-items-center gap-3 flex-fill">
-                                <i class="bi bi-cloud-check-fill"></i>
-                                <div><strong>Cloud Computing Fundamentals</strong><div class="small text-muted">Certificate of completion</div></div>
-                            </li>
-                            <li class="list-group-item d-flex align-items-center gap-3 flex-fill">
-                                <i class="bi bi-database-fill"></i>
-                                <div><strong>Database Design Basics</strong><div class="small text-muted">Certificate of completion</div></div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
+                    {{-- ===== Background card with photo ===== --}}
+                    <section class="mb-5">
+                        <div class="card card-hover p-4">
+                            <div class="row align-items-center g-4">
+                                <div class="col-md-4 d-flex justify-content-center">
+                                    {{-- Initials avatar: replace with <img src="{{ asset('images/' . $member['slug'] . '.jpg') }}" alt="{{ $member['name'] }}"> --}}
+                                    <div class="avatar avatar-lg">{{ $member['initials'] }}</div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h2 class="h4 mb-1">{{ $member['name'] }}</h2>
+                                    <p class="fw-medium mb-2" style="color:var(--c-primary)">{{ $member['title'] }}</p>
+                                    <p class="text-muted mb-2">
+                                        <i class="bi bi-code-slash me-1"></i>{{ $member['focus'] }}
+                                    </p>
+                                    <p class="text-muted mb-3">
+                                        <i class="bi bi-geo-alt me-1"></i>{{ $member['location'] }}
+                                    </p>
+                                    <p>{{ $member['bio'] }}</p>
+                                    <span class="badge text-bg-primary">{{ $member['skills'][0]['name'] }}</span>
+                                    <span class="badge text-bg-warning">{{ $member['projects'] }} Projects Delivered</span>
+                                    <span class="badge text-bg-success">{{ count($member['certifications']) }} Certifications</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
 
-        {{-- ===== Hobbies (icon cards) ===== --}}
-        <section class="mb-5 reveal">
-            <h2 class="section-title h4">Hobbies</h2>
-            <div class="row g-4">
-                <div class="col-6 col-md-3">
-                    <div class="card card-hover text-center p-4 h-100">
-                        <div class="icon-circle mx-auto mb-3"><i class="bi bi-book"></i></div>
-                        <h3 class="h6 mb-1">Reading</h3>
-                        <p class="small text-muted mb-0">Exploring new ideas and stories</p>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="card card-hover text-center p-4 h-100">
-                        <div class="icon-circle mx-auto mb-3"><i class="bi bi-camera"></i></div>
-                        <h3 class="h6 mb-1">Photography</h3>
-                        <p class="small text-muted mb-0">Capturing everyday moments</p>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="card card-hover text-center p-4 h-100">
-                        <div class="icon-circle mx-auto mb-3"><i class="bi bi-compass"></i></div>
-                        <h3 class="h6 mb-1">Hiking</h3>
-                        <p class="small text-muted mb-0">Enjoying nature and fresh air</p>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="card card-hover text-center p-4 h-100">
-                        <div class="icon-circle mx-auto mb-3"><i class="bi bi-controller"></i></div>
-                        <h3 class="h6 mb-1">Gaming</h3>
-                        <p class="small text-muted mb-0">Relaxing and playing with friends</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+                    {{-- ===== Skills (progress bars) and Certifications (list group) ===== --}}
+                    <section class="mb-5">
+                        <div class="row g-4">
+                            <div class="col-lg-6 d-flex flex-column">
+                                <h2 class="section-title h4 align-self-start">Skills</h2>
+                                <div class="card p-4 flex-grow-1">
+                                    @foreach ($member['skills'] as $skill)
+                                        <div class="mb-3">
+                                            <div class="d-flex justify-content-between"><span>{{ $skill['name'] }}</span><span class="text-muted">{{ $skill['level'] }}%</span></div>
+                                            <div class="progress" role="progressbar" aria-label="{{ $skill['name'] }}" aria-valuenow="{{ $skill['level'] }}" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar" style="width: {{ $skill['level'] }}%"></div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                    <div class="mt-auto">
+                                        @foreach ($member['skills'] as $skill)
+                                            <span class="badge badge-skill">{{ $skill['name'] }}</span>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
 
-        {{-- ===== Accordion: education & FAQ details ===== --}}
-        <section class="reveal">
-            <h2 class="section-title h4">Education &amp; Quick Facts</h2>
-            <div class="accordion" id="aboutAccordion">
-                <div class="accordion-item">
-                    <h3 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEdu" aria-expanded="true" aria-controls="collapseEdu">
-                            <i class="bi bi-mortarboard me-2"></i>Where do I study?
-                        </button>
-                    </h3>
-                    <div id="collapseEdu" class="accordion-collapse collapse show" data-bs-parent="#aboutAccordion">
-                        <div class="accordion-body">
-                            Bachelor of Computer Science at Sample University.
+                            <div class="col-lg-6 d-flex flex-column">
+                                <h2 class="section-title h4 align-self-start">Certifications</h2>
+                                <div class="card flex-grow-1">
+                                    <ul class="list-group list-group-flush rounded-4 h-100">
+                                        @foreach ($member['certifications'] as $cert)
+                                            <li class="list-group-item d-flex align-items-center gap-3 flex-fill">
+                                                <i class="bi {{ $cert['icon'] }}"></i>
+                                                <div><strong>{{ $cert['name'] }}</strong><div class="small text-muted">{{ $cert['note'] }}</div></div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h3 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAcad" aria-expanded="false" aria-controls="collapseAcad">
-                            <i class="bi bi-trophy me-2"></i>Academic achievements
-                        </button>
-                    </h3>
-                    <div id="collapseAcad" class="accordion-collapse collapse" data-bs-parent="#aboutAccordion">
-                        <div class="accordion-body">
-                            Current CGPA of 3.50, four completed projects and three certifications.
+                    </section>
+
+                    {{-- ===== Hobbies (icon cards) ===== --}}
+                    <section class="mb-5">
+                        <h2 class="section-title h4">Hobbies</h2>
+                        <div class="row g-4">
+                            @foreach ($member['hobbies'] as $hobby)
+                                <div class="col-6 col-md-3">
+                                    <div class="card card-hover text-center p-4 h-100">
+                                        <div class="icon-circle mx-auto mb-3"><i class="bi {{ $hobby['icon'] }}"></i></div>
+                                        <h3 class="h6 mb-1">{{ $hobby['name'] }}</h3>
+                                        <p class="small text-muted mb-0">{{ $hobby['text'] }}</p>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h3 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFocus" aria-expanded="false" aria-controls="collapseFocus">
-                            <i class="bi bi-bullseye me-2"></i>What am I looking for?
-                        </button>
-                    </h3>
-                    <div id="collapseFocus" class="accordion-collapse collapse" data-bs-parent="#aboutAccordion">
-                        <div class="accordion-body">
-                            Opportunities to grow as a software developer by building clean, user friendly web and
-                            mobile applications with PHP, Laravel and MySQL.
+                    </section>
+
+                    {{-- ===== Accordion: education & quick facts (IDs unique per member) ===== --}}
+                    <section>
+                        <h2 class="section-title h4">Experience &amp; Quick Facts</h2>
+                        <div class="accordion" id="accordion-{{ $member['slug'] }}">
+                            @foreach ($member['education'] as $fact)
+                                <div class="accordion-item">
+                                    <h3 class="accordion-header">
+                                        <button class="accordion-button {{ $loop->first ? '' : 'collapsed' }}" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapse-{{ $member['slug'] }}-{{ $loop->index }}"
+                                                aria-expanded="{{ $loop->first ? 'true' : 'false' }}"
+                                                aria-controls="collapse-{{ $member['slug'] }}-{{ $loop->index }}">
+                                            <i class="bi {{ $fact['icon'] }} me-2"></i>{{ $fact['q'] }}
+                                        </button>
+                                    </h3>
+                                    <div id="collapse-{{ $member['slug'] }}-{{ $loop->index }}" class="accordion-collapse collapse {{ $loop->first ? 'show' : '' }}"
+                                         data-bs-parent="#accordion-{{ $member['slug'] }}">
+                                        <div class="accordion-body">{{ $fact['a'] }}</div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
-                    </div>
+                    </section>
+
                 </div>
-            </div>
-        </section>
+            @endforeach
+        </div>
 
     </div>
 
 @endsection
+
+@push('scripts')
+<script>
+    // Open the member tab named in the URL hash (e.g. /about#huda) and keep the hash in sync
+    (function () {
+        var pills = document.getElementById('memberTabs');
+        function openFromHash() {
+            var slug = window.location.hash.slice(1);
+            var btn = slug && pills.querySelector('[data-member="' + slug + '"]');
+            if (btn) bootstrap.Tab.getOrCreateInstance(btn).show();
+        }
+        pills.addEventListener('shown.bs.tab', function (e) {
+            history.replaceState(null, '', '#' + e.target.dataset.member);
+        });
+        window.addEventListener('hashchange', openFromHash);
+        openFromHash();
+    })();
+</script>
+@endpush

@@ -4,7 +4,7 @@
     {{-- ===== Head: meta, title, CDN stylesheets, custom CSS ===== --}}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title') | Alex Tan</title>
+    <title>@yield('title') | DevProfiles</title>
 
     {{-- Bootstrap 5.3 --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -24,7 +24,7 @@
     <nav class="navbar navbar-expand-lg navbar-profile sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="{{ route('home') }}">
-                <span class="brand-mark">AT</span> Alex Tan
+                <span class="brand-mark">DP</span> DevProfiles
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#mainNav" aria-controls="mainNav"
@@ -58,7 +58,7 @@
     {{-- ===== Footer ===== --}}
     <footer class="site-footer py-4 mt-5">
         <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
-            <span>&copy; {{ date('Y') }} Alex Tan. All rights reserved.</span>
+            <span>&copy; {{ date('Y') }} DevProfiles. All rights reserved.</span>
             <div class="d-flex gap-3 fs-5">
                 <a href="{{ route('home') }}" aria-label="Home"><i class="bi bi-house-door"></i></a>
                 <a href="{{ route('about') }}" aria-label="About Me"><i class="bi bi-person"></i></a>
