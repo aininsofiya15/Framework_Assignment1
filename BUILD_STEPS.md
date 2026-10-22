@@ -190,3 +190,14 @@ Only `config/team.php` content changed (same fields and structure); views, route
 - Home stats are computed from the config: 4 profiles, 15 projects showcased, 11 certifications listed, 24 skills covered (after Laravel was added for everyone; Aisyah's Cisco Routing and Switching skill was replaced by Laravel to stay at 6 skills).
 - CSS fix (`public/css/style.css`, profile pills): columns are now `minmax(0, 1fr)` and the role text wraps, because the longer role "Network and Security Specialist" stretched the grid and caused 72px of horizontal overflow at 375px on About.
 - Verification: all 3 pages return 200; each About tab opens from `/about#slug` and from the Home "View Profile" buttons; no overflow at 375px or 1280px on any tab; no JS errors; screenshots retaken.
+
+## Profile pill redesign and Laravel first
+
+| # | File | Change |
+|---|------|--------|
+| 1 | `resources/views/about.blade.php` | Nav pills now contain an initials avatar, the first name and the role (the `nav-fill` class was removed). |
+| 2 | `public/css/style.css` | New "Profile pills" block: equal-width grid (4 columns, 2 on tablet/phone), gradient active state, hover lift. |
+| 3 | `config/team.php` | Laravel added to Huda, Aisyah and Faten and placed first in every skills list, so it is the first badge on each Home profile card (Aisyah's Cisco Routing and Switching was replaced to stay at 6 skills). Home "Skills Covered" is now 24. |
+| 4 | `COMPONENTS.md` | Section rewritten for the individual profiles version (no team or matric wording). |
+
+Verification: all 3 pages return 200, all tabs open, no overflow at 375px or 1280px, screenshots retaken.

@@ -37,12 +37,12 @@ Non-Bootstrap custom effects (in `public/css/style.css` and `public/js/main.js`)
 
 No components were added or removed. Only styling changed: the `badge` colour variants (`text-bg-warning`, `text-bg-success`, also used by the success toast) now use the site palette, and the `list-group` background is transparent so it sits on its white card.
 
-## Added in the team version
+## Added for the individual profiles version
 
 | Component | Page | Why it was used |
 |-----------|------|-----------------|
-| Nav pills (`nav nav-pills`, `data-bs-toggle="pill"`, `tab-content`, `tab-pane fade`) | About | One tab per team member; `/about#slug` opens that member's tab. On phones the pills form a 2 x 2 grid so none are cut off. |
-| Select (`form-select`, required, `invalid-feedback`) | Contact | "Send to" the chosen member; the name appears in the success toast. |
-| Cards (member cards, `member-card`) | Home | "Meet the Team": avatar, name, matric ID, title, 3 skill badges, "View profile" button. |
-| Accordion (one per member, unique IDs) | About | Education facts for each member. |
-| Tooltips | Contact | Now on the social icons of all four members. |
+| Nav pills (`nav nav-pills`, `data-bs-toggle="pill"`, `tab-content`, `tab-pane fade`) | About | One tab per person; `/about#slug` opens that person's tab. Each pill shows an initials avatar, first name and role; four equal-width pills on desktop, a 2 x 2 grid on tablet and phone. |
+| Select (`form-select`, required, `invalid-feedback`) | Contact | "Who would you like to contact?"; the chosen name appears in the success toast. |
+| Cards (profile cards, `member-card`) | Home | "Featured Profiles": avatar, name, title, 3 skill badges (Laravel first), "View Profile" button. |
+| Accordion (one per person, unique IDs) | About | Education and quick facts for each person. |
+| Tooltips | Contact | On the social icons of all four people. |
